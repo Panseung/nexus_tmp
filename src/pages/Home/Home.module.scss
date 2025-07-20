@@ -1,27 +1,32 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 1rem;
-  color: #333;
-  
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
 }
 
 .description {
-  font-size: 1.2rem;
-  color: #666;
-  max-width: 600px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
   line-height: 1.6;
+}
+
+.content {
+  background: var(--bg-primary);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  
+  p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
 } 

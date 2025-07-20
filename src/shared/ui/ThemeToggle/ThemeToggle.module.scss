@@ -1,0 +1,41 @@
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+  }
+  
+  &:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+  }
+  
+  .icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .icon {
+    transform: rotate(15deg);
+  }
+}
+
+// 다크 모드에서의 스타일
+[data-theme='dark'] .themeToggle {
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  &:focus {
+    outline-color: #8b5cf6;
+  }
+} 
