@@ -1,0 +1,61 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.owner {
+  background: rgba(168, 85, 247, 0.1);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.manager {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.nonManager {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+  border: 1px solid rgba(107, 114, 128, 0.2);
+}
+
+.unknown {
+  background: rgba(156, 163, 175, 0.1);
+  color: #9ca3af;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+// 다크 모드 대응
+[data-theme='dark'] {
+  .owner {
+    background: rgba(196, 181, 253, 0.2);
+    color: #c4b5fd;
+    border-color: rgba(196, 181, 253, 0.3);
+  }
+
+  .manager {
+    background: rgba(253, 224, 71, 0.2);
+    color: #fde047;
+    border-color: rgba(253, 224, 71, 0.3);
+  }
+
+  .nonManager {
+    background: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+    border-color: rgba(156, 163, 175, 0.3);
+  }
+
+  .unknown {
+    background: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+    border-color: rgba(156, 163, 175, 0.3);
+  }
+} 
