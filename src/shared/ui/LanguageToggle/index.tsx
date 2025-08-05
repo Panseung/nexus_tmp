@@ -13,7 +13,7 @@ const LanguageToggle: React.FC = () => {
       title={`Switch to ${language === 'ko' ? 'English' : '한국어'}`}
     >
       <span className={styles.languageText}>
-        {language === 'ko' ? 'EN' : '한'}
+        {language === 'ko' ? 'EN' : 'KO'}
       </span>
     </button>
   );
