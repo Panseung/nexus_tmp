@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from '../../shared/lib/i18n';
+import ColumnSelector from '../../shared/ui/ColumnSelector';
 import styles from './UserControls.module.scss';
 
 interface UserControlsProps {
@@ -24,6 +25,8 @@ const UserControls: React.FC<UserControlsProps> = ({
   onPageSizeChange,
 }) => {
   const { t } = useTranslation();
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange(e.target.value);
   };
@@ -82,7 +85,19 @@ const UserControls: React.FC<UserControlsProps> = ({
             className={styles.searchInput}
           />
           <span className={styles.searchIcon}>🔍</span>
+          <button
+            className={styles.columnButton}
+            onClick={() => setShowColumnSelector(!showColumnSelector)}
+            title={t('users.columnSettings')}
+          >
+            ⚙️
+          </button>
         </div>
+        {showColumnSelector && (
+          <div className={styles.columnSelectorWrapper}>
+            <ColumnSelector />
+          </div>
+        )}
       </div>
 
       <div className={styles.paginationSection}>

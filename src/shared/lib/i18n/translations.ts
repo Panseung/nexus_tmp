@@ -31,8 +31,6 @@ export interface Translations {
     loading: string;
   };
   users: {
-    title: string;
-    description: string;
     name: string;
     email: string;
     handle: string;
@@ -49,6 +47,10 @@ export interface Translations {
     deleteConfirm: string;
     editUser: string;
     noUsers: string;
+    lastLogin: string;
+    columnSettings: string;
+    resetColumns: string;
+    reset: string;
     roles: {
       admin: string;
       moderator: string;
@@ -103,8 +105,6 @@ export const translations: Record<string, Translations> = {
       loading: '로그인 중...',
     },
     users: {
-      title: '사용자 관리',
-      description: '시스템의 모든 사용자를 관리하고 조회합니다.',
       name: '이름',
       email: '이메일',
       handle: '핸들',
@@ -121,6 +121,10 @@ export const translations: Record<string, Translations> = {
       deleteConfirm: '{name} 사용자를 삭제하시겠습니까?',
       editUser: '사용자 수정',
       noUsers: '등록된 사용자가 없습니다.',
+      lastLogin: '마지막 로그인',
+      columnSettings: '컬럼 설정',
+      resetColumns: '컬럼 초기화',
+      reset: '초기화',
       roles: {
         admin: '관리자',
         moderator: '모더레이터',
@@ -173,8 +177,6 @@ export const translations: Record<string, Translations> = {
       loading: 'Signing in...',
     },
     users: {
-      title: 'User Management',
-      description: 'Manage and view all users in the system.',
       name: 'Name',
       email: 'Email',
       handle: 'Handle',
@@ -191,6 +193,10 @@ export const translations: Record<string, Translations> = {
       deleteConfirm: 'Are you sure you want to delete {name}?',
       editUser: 'Edit User',
       noUsers: 'No users found.',
+      lastLogin: 'Last Login',
+      columnSettings: 'Column Settings',
+      resetColumns: 'Reset Columns',
+      reset: 'Reset',
       roles: {
         admin: 'Admin',
         moderator: 'Moderator',

@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 20px;
   margin-bottom: 20px;
+  flex-shrink: 0; /* 컨트롤은 축소되지 않도록 */
 }
 
 .searchSection {
@@ -15,6 +16,9 @@
   position: relative;
   max-width: 400px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .searchInput {
@@ -46,6 +50,35 @@
   font-size: 1rem;
 }
 
+.columnButton {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+
+  &:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-color);
+  }
+}
+
+.columnSelectorWrapper {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-top: 8px;
+}
+
 .paginationSection {
   display: flex;
   justify-content: space-between;
@@ -55,11 +88,13 @@
 }
 
 .pageInfo {
+  flex: 1;
   color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .pageSizeContainer {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -83,8 +118,10 @@
 }
 
 .pagination {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
 }
 
@@ -121,7 +158,7 @@
 
   &.ellipsis {
     cursor: default;
-    
+
     &:hover {
       background: var(--bg-primary);
       border-color: var(--border-color);
@@ -195,13 +232,9 @@
     text-align: center;
   }
 
-  .pagination {
-    justify-content: center;
-  }
-
   .pageButton {
     min-width: 32px;
     height: 32px;
     font-size: 0.8rem;
   }
-} 
+}

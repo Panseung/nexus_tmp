@@ -6,3 +6,5 @@ export { useThemeStore } from './themeStore';
 export { useAuthStore } from './authStore';
 // 언어 store export
 export { useLanguageStore } from './languageStore';
+// 컬럼 설정 store export
+export { useColumnStore } from './columnStore';
