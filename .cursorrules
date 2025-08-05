@@ -1,0 +1,83 @@
+# Nexus Project Development Rules
+
+## Architecture
+
+- Follow Feature-Sliced Design (FSD) architecture
+- Use Zustand for state management
+- Implement proper TypeScript types
+- Use SCSS modules for styling
+
+## Component Structure
+
+- Entities: Basic UI components and types
+- Features: Business logic hooks
+- Widgets: Complex UI components
+- Pages: Route-level components
+
+## Styling Guidelines
+
+- Use CSS variables for theming (data-theme, data-language)
+- Follow BEM-like naming convention for CSS classes
+- Use SCSS modules for component-specific styles
+- Implement responsive design with mobile-first approach
+
+## Scroll Management Rules
+
+- **CRITICAL**: All page-level components (Users, Communities, Events, etc.) must implement internal scrolling only
+- **NO GLOBAL SCROLL**: Never allow scroll on html, body, or #root elements
+- **PAGE LAYOUT**: Each page should use flexbox with height: 100vh and overflow: hidden
+- **CONTENT AREA**: Page content should use flex: 1 and overflow: hidden
+- **SCROLLABLE COMPONENT**: Only the main data component (table, list, etc.) should have overflow: auto
+- **STRUCTURE**:
+
+  ```scss
+  .pageContainer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .pageContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .scrollableComponent {
+    flex: 1;
+    overflow: auto;
+    min-height: 0;
+  }
+  ```
+
+## State Management
+
+- Use Zustand stores with persist middleware for user preferences
+- Keep stores simple and focused
+- Export stores from src/app/store/index.ts
+
+## API Communication
+
+- Use axios with withCredentials: true for cookie-based auth
+- Implement proper error handling
+- Use TypeScript interfaces for API responses
+
+## Internationalization
+
+- Support Korean and English languages
+- Use data-language attribute for language switching
+- Implement translation keys in src/shared/lib/i18n/translations.ts
+
+## Z-Index Management
+
+- Use centralized z-index variables from src/app/styles/z-index.scss
+- Import z-index variables in each component's SCSS file
+- Follow the established z-index hierarchy
+
+## Performance
+
+- Use React.memo for components that don't need frequent re-renders
+- Implement proper dependency arrays in useEffect
+- Optimize re-renders with useMemo and useCallback when necessary

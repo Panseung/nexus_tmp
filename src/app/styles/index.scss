@@ -44,24 +44,11 @@
   box-sizing: border-box;
 }
 
-// 스크롤바로 인한 레이아웃 흔들림 방지
+// 스크롤바 스타일링 (전역 스크롤 제거)
 html {
-  overflow-y: scroll;
+  overflow: hidden;
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: var(--border-color) var(--bg-secondary); /* Firefox */
-}
-
-/* 스크롤바 공간을 항상 확보하여 레이아웃 흔들림 방지 */
-html {
-  /* 스크롤바 너비만큼 오른쪽 패딩 추가 */
-  padding-right: calc(100vw - 100%);
-}
-
-/* 모바일에서는 스크롤바가 오버레이되므로 패딩 제거 */
-@media (max-width: 768px) {
-  html {
-    padding-right: 0;
-  }
 }
 
 body {

@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden; /* 내부 스크롤만 허용 */
-  min-height: 400px; /* 최소 높이 설정 */
+  min-height: 200px; /* 최소 높이 축소 */
 }
 
 .tableWrapper {
@@ -249,7 +249,7 @@
 // 반응형 디자인
 @media (max-width: 768px) {
   .container {
-    min-height: 300px; /* 모바일에서는 더 작은 최소 높이 */
+    min-height: 150px; /* 모바일에서는 더 작은 최소 높이 */
   }
 
   .table th,
