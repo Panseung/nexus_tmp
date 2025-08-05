@@ -11,6 +11,7 @@ import SignIn from '../pages/SignIn';
 import ProtectedRoute from '../shared/ui/ProtectedRoute';
 import { useSidebarStore } from './store';
 import ThemeProvider from './providers/ThemeProvider';
+import LanguageProvider from './providers/LanguageProvider';
 import styles from './styles/App.module.scss';
 
 const App = () => {
@@ -18,38 +19,40 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <Router>
-        <Routes>
-          {/* 공개 라우트 */}
-          <Route path="/signin" element={<SignIn />} />
+      <LanguageProvider>
+        <Router>
+          <Routes>
+            {/* 공개 라우트 */}
+            <Route path="/signin" element={<SignIn />} />
 
-          {/* 보호된 라우트 */}
-          <Route
-            path="/*"
-            element={
-              <ProtectedRoute>
-                <div className={styles.app}>
-                  <Navigation />
-                  <Sidebar
-                    isOpen={isOpen}
-                    onToggle={toggle}
-                    onMenuClick={close}
-                  />
-                  <main className={styles.main}>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/users" element={<Users />} />
-                      <Route path="/events" element={<Events />} />
-                      <Route path="/communities" element={<Communities />} />
-                      <Route path="/logs" element={<Logs />} />
-                    </Routes>
-                  </main>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+            {/* 보호된 라우트 */}
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <div className={styles.app}>
+                    <Navigation />
+                    <Sidebar
+                      isOpen={isOpen}
+                      onToggle={toggle}
+                      onMenuClick={close}
+                    />
+                    <main className={styles.main}>
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/users" element={<Users />} />
+                        <Route path="/events" element={<Events />} />
+                        <Route path="/communities" element={<Communities />} />
+                        <Route path="/logs" element={<Logs />} />
+                      </Routes>
+                    </main>
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </LanguageProvider>
     </ThemeProvider>
   );
 };

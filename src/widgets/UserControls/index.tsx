@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../../shared/lib/i18n';
 import styles from './UserControls.module.scss';
 
 interface UserControlsProps {
@@ -22,6 +23,7 @@ const UserControls: React.FC<UserControlsProps> = ({
   onPageChange,
   onPageSizeChange,
 }) => {
+  const { t } = useTranslation();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange(e.target.value);
   };
@@ -74,7 +76,7 @@ const UserControls: React.FC<UserControlsProps> = ({
         <div className={styles.searchContainer}>
           <input
             type="text"
-            placeholder="사용자 검색..."
+            placeholder={t('users.searchPlaceholder')}
             value={search}
             onChange={handleSearchChange}
             className={styles.searchInput}
@@ -87,12 +89,12 @@ const UserControls: React.FC<UserControlsProps> = ({
         <div className={styles.pageInfo}>
           <span>
             {totalItems > 0 ? `${startItem}-${endItem}` : '0'} / {totalItems}{' '}
-            사용자
+            {t('users.totalUsers')}
           </span>
         </div>
 
         <div className={styles.pageSizeContainer}>
-          <label htmlFor="pageSize">페이지당:</label>
+          <label htmlFor="pageSize">{t('users.usersPerPage')}</label>
           <select
             id="pageSize"
             value={pageSize}

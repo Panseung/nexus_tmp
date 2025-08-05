@@ -4,3 +4,5 @@ export { useSidebarStore } from './sidebarStore';
 export { useThemeStore } from './themeStore';
 // 인증 store export
 export { useAuthStore } from './authStore';
+// 언어 store export
+export { useLanguageStore } from './languageStore';

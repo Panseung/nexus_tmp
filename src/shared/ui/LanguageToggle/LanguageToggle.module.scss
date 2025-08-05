@@ -1,0 +1,60 @@
+.languageToggle {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 36px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+
+  &:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-color);
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.languageText {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+// 다크 모드 대응
+[data-theme='dark'] {
+  .languageToggle {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg-secondary);
+      border-color: var(--accent-color);
+    }
+  }
+}
+
+// 반응형 디자인
+@media (max-width: 768px) {
+  .languageToggle {
+    padding: 6px 10px;
+    min-width: 36px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+} 

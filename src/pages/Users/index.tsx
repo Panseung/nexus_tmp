@@ -1,11 +1,13 @@
 import React from 'react';
 import { useUsers } from '../../features/user/hooks/useUsers';
 import { User } from '../../entities/user/types/user.types';
+import { useTranslation } from '../../shared/lib/i18n';
 import UserTable from '../../widgets/UserTable';
 import UserControls from '../../widgets/UserControls';
 import styles from './Users.module.scss';
 
 const Users = () => {
+  const { t } = useTranslation();
   const {
     users,
     loading,
@@ -29,10 +31,8 @@ const Users = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>사용자 관리</h1>
-        <p className={styles.description}>
-          시스템의 모든 사용자를 관리하고 조회합니다.
-        </p>
+        <h1 className={styles.title}>{t('users.title')}</h1>
+        <p className={styles.description}>{t('users.description')}</p>
       </div>
 
       {error && (

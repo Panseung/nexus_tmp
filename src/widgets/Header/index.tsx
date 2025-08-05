@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSidebarStore, useAuthStore } from '../../app/store';
 import { signOut } from '../../shared/api/auth.api';
 import ThemeToggle from '../../shared/ui/ThemeToggle';
+import LanguageToggle from '../../shared/ui/LanguageToggle';
 import styles from './Navigation.module.scss';
 
 const Navigation = () => {
@@ -81,6 +82,7 @@ const Navigation = () => {
           <h1 className={styles.pageTitle}>{getCurrentPageName()}</h1>
         </div>
         <div className={styles.rightSection}>
+          <LanguageToggle />
           <ThemeToggle />
           <div className={styles.userSection}>
             <button

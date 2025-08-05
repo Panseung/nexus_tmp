@@ -2,6 +2,7 @@ import React from 'react';
 import { User } from '../../entities/user/types/user.types';
 import UserRoleChip from '../../entities/user/ui/UserRoleChip';
 import UserAccessLevelChip from '../../entities/user/ui/UserAccessLevelChip';
+import { useTranslation } from '../../shared/lib/i18n';
 import styles from './UserTable.module.scss';
 
 interface UserTableProps {
@@ -17,8 +18,10 @@ const UserTable: React.FC<UserTableProps> = ({
   onDeleteUser,
   onEditUser,
 }) => {
+  const { t } = useTranslation();
+
   const handleDeleteClick = (user: User) => {
-    if (window.confirm(`${user.name} 사용자를 삭제하시겠습니까?`)) {
+    if (window.confirm(t('users.deleteConfirm').replace('{name}', user.name))) {
       onDeleteUser(user.id);
     }
   };
@@ -35,7 +38,7 @@ const UserTable: React.FC<UserTableProps> = ({
     return (
       <div className={styles.loading}>
         <div className={styles.spinner}></div>
-        <p>사용자 목록을 불러오는 중...</p>
+        <p>{t('common.loading')}</p>
       </div>
     );
   }
@@ -43,7 +46,7 @@ const UserTable: React.FC<UserTableProps> = ({
   if (users.length === 0) {
     return (
       <div className={styles.empty}>
-        <p>등록된 사용자가 없습니다.</p>
+        <p>{t('users.noUsers')}</p>
       </div>
     );
   }
@@ -53,14 +56,14 @@ const UserTable: React.FC<UserTableProps> = ({
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>이름</th>
-            <th>이메일</th>
-            <th>핸들</th>
-            <th>역할</th>
-            <th>접근 레벨</th>
-            <th>상태</th>
-            <th>가입일</th>
-            <th>작업</th>
+            <th>{t('users.name')}</th>
+            <th>{t('users.email')}</th>
+            <th>{t('users.handle')}</th>
+            <th>{t('users.role')}</th>
+            <th>{t('users.accessLevel')}</th>
+            <th>{t('users.status')}</th>
+            <th>{t('users.joinDate')}</th>
+            <th>{t('users.actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -89,7 +92,7 @@ const UserTable: React.FC<UserTableProps> = ({
                 <span
                   className={`${styles.status} ${user.isActive ? styles.active : styles.inactive}`}
                 >
-                  {user.isActive ? '활성' : '비활성'}
+                  {user.isActive ? t('users.active') : t('users.inactive')}
                 </span>
               </td>
               <td className={styles.dateCell}>{formatDate(user.createdAt)}</td>
