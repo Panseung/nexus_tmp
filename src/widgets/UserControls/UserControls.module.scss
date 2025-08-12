@@ -1,3 +1,5 @@
+@import '../../app/styles/z-index.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -70,14 +72,6 @@
   }
 }
 
-.columnSelectorWrapper {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  margin-top: 8px;
-}
-
 .paginationSection {
   display: flex;
   justify-content: space-between;
@@ -114,6 +108,18 @@
     outline: none;
     border-color: var(--accent-color);
   }
+}
+
+.paginationColumnControl {
+  position: relative;
+}
+
+.paginationColumnSelectorWrapper {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  z-index: $z-index-column-selector;
 }
 
 .pagination {

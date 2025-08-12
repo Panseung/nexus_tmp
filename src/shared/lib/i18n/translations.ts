@@ -47,20 +47,34 @@ export interface Translations {
     deleteConfirm: string;
     editUser: string;
     noUsers: string;
-    lastLogin: string;
-    columnSettings: string;
-    resetColumns: string;
-    reset: string;
-    roles: {
-      admin: string;
-      moderator: string;
-      user: string;
-    };
-    accessLevels: {
-      owner: string;
-      manager: string;
-      nonManager: string;
-    };
+  };
+  communities: {
+    name: string;
+    subdomain: string;
+    visibility: string;
+    members: string;
+    owner: string;
+    createdAt: string;
+    status: string;
+    actions: string;
+    searchPlaceholder: string;
+    totalCommunities: string;
+    communitiesPerPage: string;
+  };
+  events: {
+    progress: string;
+    title: string;
+    handle: string;
+    visibility: string;
+    participations: string;
+    hostedBy: string;
+    community: string;
+    startDate: string;
+    status: string;
+    actions: string;
+    searchPlaceholder: string;
+    totalEvents: string;
+    eventsPerPage: string;
   };
   errors: {
     networkError: string;
@@ -121,20 +135,34 @@ export const translations: Record<string, Translations> = {
       deleteConfirm: '{name} 사용자를 삭제하시겠습니까?',
       editUser: '사용자 수정',
       noUsers: '등록된 사용자가 없습니다.',
-      lastLogin: '마지막 로그인',
-      columnSettings: '컬럼 설정',
-      resetColumns: '컬럼 초기화',
-      reset: '초기화',
-      roles: {
-        admin: '관리자',
-        moderator: '모더레이터',
-        user: '사용자',
-      },
-      accessLevels: {
-        owner: '소유자',
-        manager: '관리자',
-        nonManager: '일반',
-      },
+    },
+    communities: {
+      name: '이름',
+      subdomain: '서브도메인',
+      visibility: '공개 범위',
+      members: '멤버 수',
+      owner: '소유자',
+      createdAt: '생성일',
+      status: '상태',
+      actions: '작업',
+      searchPlaceholder: '커뮤니티 검색...',
+      totalCommunities: '커뮤니티',
+      communitiesPerPage: '페이지당:',
+    },
+    events: {
+      progress: '진행도',
+      title: '제목',
+      handle: '핸들',
+      visibility: '공개 범위',
+      participations: '참여자 수',
+      hostedBy: '호스트',
+      community: '커뮤니티',
+      startDate: '시작일',
+      status: '상태',
+      actions: '작업',
+      searchPlaceholder: '이벤트 검색...',
+      totalEvents: '이벤트',
+      eventsPerPage: '페이지당:',
     },
     errors: {
       networkError: '네트워크 오류가 발생했습니다.',
@@ -193,20 +221,34 @@ export const translations: Record<string, Translations> = {
       deleteConfirm: 'Are you sure you want to delete {name}?',
       editUser: 'Edit User',
       noUsers: 'No users found.',
-      lastLogin: 'Last Login',
-      columnSettings: 'Column Settings',
-      resetColumns: 'Reset Columns',
-      reset: 'Reset',
-      roles: {
-        admin: 'Admin',
-        moderator: 'Moderator',
-        user: 'User',
-      },
-      accessLevels: {
-        owner: 'Owner',
-        manager: 'Manager',
-        nonManager: 'Non-Manager',
-      },
+    },
+    communities: {
+      name: 'Name',
+      subdomain: 'Subdomain',
+      visibility: 'Visibility',
+      members: 'Members',
+      owner: 'Owner',
+      createdAt: 'Creation Date',
+      status: 'Status',
+      actions: 'Actions',
+      searchPlaceholder: 'Search communities...',
+      totalCommunities: 'communities',
+      communitiesPerPage: 'Per page:',
+    },
+    events: {
+      progress: 'Progress',
+      title: 'Title',
+      handle: 'Handle',
+      visibility: 'Visibility',
+      participations: 'Participations',
+      hostedBy: 'Hosted by',
+      community: 'Community',
+      startDate: 'Start Date',
+      status: 'Status',
+      actions: 'Actions',
+      searchPlaceholder: 'Search events...',
+      totalEvents: 'events',
+      eventsPerPage: 'Per page:',
     },
     errors: {
       networkError: 'Network error occurred.',

@@ -10,28 +10,32 @@ interface UserTableProps {
   loading: boolean;
   onDeleteUser: (userId: string) => void;
   onEditUser: (user: User) => void;
+  columnVisibility?: Record<
+    'name' | 'email' | 'handle' | 'role' | 'access' | 'status' | 'joinDate',
+    boolean
+  >;
 }
 
 // 테이블 헤더 컴포넌트 (메모이제이션)
-const TableHeader = React.memo(() => {
+const TableHeader: React.FC<{
+  v: Required<UserTableProps>['columnVisibility'];
+}> = React.memo(({ v }) => {
   const { t } = useTranslation();
-
   return (
     <thead>
       <tr>
-        <th>{t('users.name')}</th>
-        <th>{t('users.email')}</th>
-        <th>{t('users.handle')}</th>
-        <th>{t('users.role')}</th>
-        <th>{t('users.accessLevel')}</th>
-        <th>{t('users.joinDate')}</th>
-        <th>{t('users.status')}</th>
+        {v.name && <th>{t('users.name')}</th>}
+        {v.email && <th>{t('users.email')}</th>}
+        {v.handle && <th>{t('users.handle')}</th>}
+        {v.role && <th>{t('users.role')}</th>}
+        {v.access && <th>{t('users.accessLevel')}</th>}
+        {v.joinDate && <th>{t('users.joinDate')}</th>}
+        {v.status && <th>{t('users.status')}</th>}
         <th>{t('users.actions')}</th>
       </tr>
     </thead>
   );
 });
-
 TableHeader.displayName = 'TableHeader';
 
 // 테이블 행 컴포넌트 (메모이제이션)
@@ -41,7 +45,8 @@ const TableRow = React.memo<{
   onEditUser: (user: User) => void;
   formatDate: (dateString: string) => string;
   t: (key: string) => string;
-}>(({ user, onDeleteUser, onEditUser, formatDate, t }) => {
+  v: Required<UserTableProps>['columnVisibility'];
+}>(({ user, onDeleteUser, onEditUser, formatDate, t, v }) => {
   const handleDeleteClick = () => {
     if (window.confirm(t('users.deleteConfirm').replace('{name}', user.name))) {
       onDeleteUser(user.id);
@@ -50,33 +55,47 @@ const TableRow = React.memo<{
 
   return (
     <tr className={styles.row}>
-      <td className={styles.nameCell}>
-        <div className={styles.nameContainer}>
-          <span className={styles.name}>{user.name}</span>
-        </div>
-      </td>
-      <td className={styles.emailCell}>
-        <a href={`mailto:${user.email}`} className={styles.email}>
-          {user.email}
-        </a>
-      </td>
-      <td className={styles.handleCell}>
-        <span className={styles.handle}>@{user.handle}</span>
-      </td>
-      <td className={styles.roleCell}>
-        <UserRoleChip role={user.role} />
-      </td>
-      <td className={styles.accessCell}>
-        <UserAccessLevelChip accessLevel={user.accessLevel} />
-      </td>
-      <td className={styles.dateCell}>{formatDate(user.createdAt)}</td>
-      <td className={styles.statusCell}>
-        <span
-          className={`${styles.status} ${user.isActive ? styles.active : styles.inactive}`}
-        >
-          {user.isActive ? t('users.active') : t('users.inactive')}
-        </span>
-      </td>
+      {v.name && (
+        <td className={styles.nameCell}>
+          <div className={styles.nameContainer}>
+            <span className={styles.name}>{user.name}</span>
+          </div>
+        </td>
+      )}
+      {v.email && (
+        <td className={styles.emailCell}>
+          <a href={`mailto:${user.email}`} className={styles.email}>
+            {user.email}
+          </a>
+        </td>
+      )}
+      {v.handle && (
+        <td className={styles.handleCell}>
+          <span className={styles.handle}>@{user.handle}</span>
+        </td>
+      )}
+      {v.role && (
+        <td className={styles.roleCell}>
+          <UserRoleChip role={user.role} />
+        </td>
+      )}
+      {v.access && (
+        <td className={styles.accessCell}>
+          <UserAccessLevelChip accessLevel={user.accessLevel} />
+        </td>
+      )}
+      {v.joinDate && (
+        <td className={styles.dateCell}>{formatDate(user.createdAt)}</td>
+      )}
+      {v.status && (
+        <td className={styles.statusCell}>
+          <span
+            className={`${styles.status} ${user.isActive ? styles.active : styles.inactive}`}
+          >
+            {user.isActive ? t('users.active') : t('users.inactive')}
+          </span>
+        </td>
+      )}
       <td className={styles.actionsCell}>
         <div className={styles.actions}>
           <button
@@ -98,7 +117,6 @@ const TableRow = React.memo<{
     </tr>
   );
 });
-
 TableRow.displayName = 'TableRow';
 
 const UserTable: React.FC<UserTableProps> = ({
@@ -106,8 +124,20 @@ const UserTable: React.FC<UserTableProps> = ({
   loading,
   onDeleteUser,
   onEditUser,
+  columnVisibility,
 }) => {
   const { t } = useTranslation();
+
+  const v: Required<UserTableProps>['columnVisibility'] = {
+    name: true,
+    email: true,
+    handle: true,
+    role: true,
+    access: true,
+    status: true,
+    joinDate: true,
+    ...(columnVisibility || {}),
+  } as any;
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ko-KR', {
@@ -126,7 +156,7 @@ const UserTable: React.FC<UserTableProps> = ({
     );
   }
 
-  if (users.length === 0) {
+  if (!users.length) {
     return (
       <div className={styles.empty}>
         <p>{t('users.noUsers')}</p>
@@ -138,7 +168,7 @@ const UserTable: React.FC<UserTableProps> = ({
     <div className={styles.container}>
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
-          <TableHeader />
+          <TableHeader v={v} />
           <tbody>
             {users.map((user) => (
               <TableRow
@@ -147,7 +177,8 @@ const UserTable: React.FC<UserTableProps> = ({
                 onDeleteUser={onDeleteUser}
                 onEditUser={onEditUser}
                 formatDate={formatDate}
-                t={t}
+                t={(k) => t(k)}
+                v={v}
               />
             ))}
           </tbody>

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { useTranslation } from '../../shared/lib/i18n';
-import ColumnSelector from '../../shared/ui/ColumnSelector';
+import ColumnSelector, { ColumnOption } from '../../shared/ui/ColumnSelector';
 import styles from './UserControls.module.scss';
 
-interface UserControlsProps {
+interface LabelsProps {
+  searchPlaceholder: string;
+  totalLabel: string; // e.g., users, communities, events
+  perPageLabel: string; // e.g., 페이지당:, Per page:
+}
+
+interface UserControlsProps<ColKey extends string = string> {
   search: string;
   onSearchChange: (search: string) => void;
   currentPage: number;
@@ -12,9 +17,15 @@ interface UserControlsProps {
   totalItems: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
+  labels: LabelsProps;
+  // optional column selector
+  columnOptions?: ColumnOption<ColKey>[];
+  columnVisibility?: Record<ColKey, boolean>;
+  onChangeColumnVisibility?: (next: Record<ColKey, boolean>) => void;
+  columnSelectorTitle?: string;
 }
 
-const UserControls: React.FC<UserControlsProps> = ({
+const UserControls = <ColKey extends string = string>({
   search,
   onSearchChange,
   currentPage,
@@ -23,8 +34,12 @@ const UserControls: React.FC<UserControlsProps> = ({
   totalItems,
   onPageChange,
   onPageSizeChange,
-}) => {
-  const { t } = useTranslation();
+  labels,
+  columnOptions,
+  columnVisibility,
+  onChangeColumnVisibility,
+  columnSelectorTitle,
+}: UserControlsProps<ColKey>) => {
   const [showColumnSelector, setShowColumnSelector] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,35 +51,25 @@ const UserControls: React.FC<UserControlsProps> = ({
   };
 
   const getPageNumbers = () => {
-    const pages = [];
+    const pages: (number | '...')[] = [];
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else if (currentPage <= 3) {
+      for (let i = 1; i <= 4; i++) pages.push(i);
+      pages.push('...');
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      pages.push(1);
+      pages.push('...');
+      for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
     } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) {
-          pages.push(i);
-        }
-        pages.push('...');
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push('...');
-        for (let i = totalPages - 3; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        pages.push(1);
-        pages.push('...');
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push('...');
-        pages.push(totalPages);
-      }
+      pages.push(1);
+      pages.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+      pages.push('...');
+      pages.push(totalPages);
     }
 
     return pages;
@@ -73,43 +78,34 @@ const UserControls: React.FC<UserControlsProps> = ({
   const startItem = (currentPage - 1) * pageSize + 1;
   const endItem = Math.min(currentPage * pageSize, totalItems);
 
+  const showSelector =
+    !!columnOptions && !!columnVisibility && !!onChangeColumnVisibility;
+
   return (
     <div className={styles.container}>
       <div className={styles.searchSection}>
         <div className={styles.searchContainer}>
           <input
             type="text"
-            placeholder={t('users.searchPlaceholder')}
+            placeholder={labels.searchPlaceholder}
             value={search}
             onChange={handleSearchChange}
             className={styles.searchInput}
           />
           <span className={styles.searchIcon}>🔍</span>
-          <button
-            className={styles.columnButton}
-            onClick={() => setShowColumnSelector(!showColumnSelector)}
-            title={t('users.columnSettings')}
-          >
-            ⚙️
-          </button>
         </div>
-        {showColumnSelector && (
-          <div className={styles.columnSelectorWrapper}>
-            <ColumnSelector />
-          </div>
-        )}
       </div>
 
       <div className={styles.paginationSection}>
         <div className={styles.pageInfo}>
           <span>
             {totalItems > 0 ? `${startItem}-${endItem}` : '0'} / {totalItems}{' '}
-            {t('users.totalUsers')}
+            {labels.totalLabel}
           </span>
         </div>
 
         <div className={styles.pageSizeContainer}>
-          <label htmlFor="pageSize">{t('users.usersPerPage')}</label>
+          <label htmlFor="pageSize">{labels.perPageLabel}</label>
           <select
             id="pageSize"
             value={pageSize}
@@ -123,6 +119,31 @@ const UserControls: React.FC<UserControlsProps> = ({
           </select>
         </div>
 
+        {showSelector && (
+          <div className={styles.paginationColumnControl}>
+            <button
+              className={styles.columnButton}
+              onClick={() => setShowColumnSelector(!showColumnSelector)}
+              title={columnSelectorTitle || 'Columns'}
+              type="button"
+            >
+              ⚙️
+            </button>
+            {showColumnSelector && (
+              <div className={styles.paginationColumnSelectorWrapper}>
+                <ColumnSelector
+                  options={columnOptions as ColumnOption<string>[]}
+                  value={columnVisibility as Record<string, boolean>}
+                  onChange={(next) =>
+                    onChangeColumnVisibility!(next as Record<ColKey, boolean>)
+                  }
+                  title={columnSelectorTitle}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
         <div className={styles.pagination}>
           <button
             className={`${styles.pageButton} ${styles.prevButton}`}
@@ -135,9 +156,7 @@ const UserControls: React.FC<UserControlsProps> = ({
           {getPageNumbers().map((page, index) => (
             <button
               key={index}
-              className={`${styles.pageButton} ${
-                page === currentPage ? styles.active : ''
-              } ${page === '...' ? styles.ellipsis : ''}`}
+              className={`${styles.pageButton} ${page === currentPage ? styles.active : ''} ${page === '...' ? styles.ellipsis : ''}`}
               onClick={() => typeof page === 'number' && onPageChange(page)}
               disabled={page === '...'}
             >
